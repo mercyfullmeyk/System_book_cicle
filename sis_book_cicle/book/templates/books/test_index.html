@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обмен Книгами - Школьный Сайт</title><!-- Подключение CSS -->
+</head>
+<body>
+    <header>
+        <h1>Обмен Книгами</h1>
+        <nav>
+            <ul>
+                <li><a>Главная</a></li>
+                <li><a>Добавить Книгу</a></li>
+                <li><a>Мои Книги</a></li>
+                <li><a>Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Добро пожаловать на платформу обмена книгами!</h2>
+            <p>Здесь вы можете обмениваться книгами с другими учениками, находить новые произведения и делиться своим опытом чтения.</p>
+        </section>
+
+        <section>
+            <h3>Популярные Книги</h3>
+            <ul>
+                {% for book in books %}
+                {% include 'books/includes/post_list.html' %}
+                  {% if not forloop.last %}<hr>{% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Школьный Сайт. Все права защищены.</p>
+    </footer>
+</body>
+</html>

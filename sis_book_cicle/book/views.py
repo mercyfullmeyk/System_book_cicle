@@ -10,7 +10,7 @@ def index(request):
         'title': title,
         'books': books_list
     }
-    return render(request, 'books/index.html', context)
+    return render(request, 'books/test_index.html', context)
 
 
 def book(request, book_id):
@@ -20,4 +20,4 @@ def book(request, book_id):
     context = {
         'book': book
     }
-    return render(request, 'books/book.html', context)
+    return render(request, 'books/test_book.html', context)
