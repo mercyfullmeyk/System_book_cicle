@@ -1,0 +1,17 @@
+
+
+  {% block title %}
+  Последние обновления
+  {% endblock %}
+  {% block content %}
+    <main>
+      <div class="container py-5">  
+
+          {% for book in books %}
+          {% include 'posts/includes/post_list.html' %}
+            {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+
+        {% endblock %} 
+      </div>
+    </main>

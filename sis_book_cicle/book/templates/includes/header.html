@@ -1,0 +1,64 @@
+<!DOCTYPE html> <!-- Используется html 5 версии -->
+<html lang="ru"> <!-- Язык сайта - русский -->
+{% load static %}  
+    <header>
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/img/fav/fav.ico" type="image">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/img/fav/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <title>{{ title }}</title>
+  </head>
+  <body>	   
+    <header>
+      <nav class="navbar navbar-light" style="background-color: hsla(50, 3%, 25%, .75)">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'posts:index' %}">
+            <img src="static/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span style="color:white">Ya</span>tube
+          </a>   
+
+          {% with request.resolver_match.view_name as view_name %}  
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link {% if view_name  == 'about:author' %}active{% endif %}" href="{% url 'about:author' %}"><span style="color:white">Об авторе</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if view_name  == 'about:tech' %}active{% endif %}" href="{% url 'about:tech' %}"><span style="color:white">Технологии</span></a>
+            </li>
+            {% endwith %} 
+            {% if user.is_authenticated %}
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'posts:post_create' %}"><span style="color:white">Новая запись</span></a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:logout' %}"><span style="color:black">Выйти</span></a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:password_change' %}"><span style="color:black">Сменить пароль</span></a>
+            </li>
+            <li>
+              Пользователь: 
+              <a href="{% url 'posts:profile' user.username %}" style="text-decoration: none; color:black">{{ user.username }} </a>
+            </li>
+
+            {% else %}
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:login' %}">Войти</a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:signup' %}">Регистрация</a>
+            </li>
+            {% endif %}
+          </ul>
+          {# Конец добавленого в спринте #}
+        </div>
+      </nav>      
+    </header> 

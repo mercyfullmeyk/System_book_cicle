@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>    
+    {% extends 'base.html' %}
+    {% load thumbnail %}
+    <title>{{ user_name }} профайл пользователя</title>
+  </head>
+  <body>	   
+    <main>
+      {% block content %}
+      <div class="container py-5">        
+        <h1>Все посты пользователя {{ user_name }}</h1>
+        <h3>Всего постов: {{ all_posts }} </h3> 
+        {% if user.is_authenticated %}
+        {% if following == True %}
+        <a
+          class="btn btn-outline-secondary"
+          href="{% url 'posts:profile_unfollow' author.username %}" role="button"
+        >
+          Отписаться
+        </a>
+        {% elif following == None %}
+        {% else %}
+          <a
+            class="btn btn-outline-secondary"
+            href="{% url 'posts:profile_follow' author.username %}" role="button"
+          >
+            Подписаться
+          </a>
+       {% endif %}
+       {% endif %}
+        {% for post in page_obj %}             
+        <article>
+          <ul>
+            {% if post.group %}   
+            <li>
+            Группа: 
+            <a href="{% url 'posts:group_list' post.group.slug %}" style="text-decoration: none; color:black">{{ post.group }}</a>
+            </li>
+            {% endif %}
+            <li>
+              Дата публикации: {{ post.pub_date }}
+            </li>
+          </ul>
+          {% thumbnail post.image "960x500" crop="center" upscale=True as im %}
+          <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+          <p>
+            {{ post.text }}
+          </p>
+          <a href="{% url 'posts:post_detail' post.pk %}"style="text-decoration: none; color:black">подробная информация </a>
+        </article>       
+        {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
+        {% endblock %}
+    </main>
+  </body>
+</html>

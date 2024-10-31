@@ -1,0 +1,24 @@
+{% if user.is_authenticated %}
+  <div class="row my-3">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a 
+          class="nav-link {% if view_name  == 'posts:index' %}active{% endif %}"
+          href="{% url 'posts:index' %}"
+          style="text-decoration: none; color:black"
+        >
+          Все авторы
+        </a>
+      </li>
+      <li class="nav-item">
+        <a 
+           class="nav-link {% if view_name  == 'posts:follow_index' %}active{% endif %}"
+           href="{% url 'posts:follow_index' %}"
+           style="text-decoration: none; color:black"
+        >
+          Избранные авторы
+        </a>
+      </li>
+    </ul>
+  </div>
+{% endif %}
