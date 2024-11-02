@@ -1,6 +1,6 @@
 <!DOCTYPE html> 
 <html lang="ru">    
-{% load static %}
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
@@ -8,12 +8,6 @@
       rel="stylesheet"
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous">
-    <style>
-      .card {
-        background: #eee;
-        box-shadow: rgb(0 0 0 / 20%) 2px 2px 5px;
-      }
-    </style>
     <title>
       {% block title %}
       {% endblock %}
@@ -30,7 +24,6 @@
       <footer>
         {% block footer %}
         {% endblock %}
-        {% include 'posts/includes/paginator.html' %}
         {% include 'includes/footer.html' %}
       </footer>
     </body>

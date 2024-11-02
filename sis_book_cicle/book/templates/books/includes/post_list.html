@@ -1,9 +1,4 @@
 <article>
-  <ul>
-    <li>
-      Автор: 
-      <a>{{ book.name }} </a>
-    </li>
-  </ul>
+  <a href="{% url 'book:book_detail' book.id %}"style="text-decoration: none; color:black"><h3>{{ book.name }}</h3></a>
   <p>{{ book.description }}</p>
 </article>
