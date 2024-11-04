@@ -22,7 +22,12 @@ class Book(models.Model):
 
     description = models.TextField()    
 
-    availability = models.BooleanField() 
+    availability = models.BooleanField()
+
+    image = models.ImageField(
+        upload_to='books/',
+        blank=True
+    )
 
     # author = models.ForeignKey(
     #     Author,

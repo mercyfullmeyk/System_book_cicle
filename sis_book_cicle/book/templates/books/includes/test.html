@@ -1,0 +1,16 @@
+{% load thumbnail %}
+<div class="col-sm-2">
+    <div class="card" style="width: 18rem;">
+    {% thumbnail book.image "960x339" crop="center" upscale=True as im %}
+    <img class="card-img-top" src="{{ im.url }}" alt="Card image cap">
+    {% endthumbnail %}
+    <div class="card-body">
+      <h5 class="card-title">{{ book.name }}</h5>
+      <p class="card-text">{{ book.description }}</p>
+      <a href="{% url 'book:book_detail' book.id %}" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+</div>
+
+
+

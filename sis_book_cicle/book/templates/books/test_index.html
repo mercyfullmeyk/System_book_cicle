@@ -6,6 +6,8 @@
     <main>
         <div class="container py-5">
         <h1><strong>Популярные Книги</strong></h1>
+        </div>
+        <div class="container py-1">
                 {% for book in books %}
                 {% include 'books/includes/post_list.html' %}
                   {% if not forloop.last %}<hr>{% endif %}
