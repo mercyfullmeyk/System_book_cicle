@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block content %}
 <body>
     <main>
-        <div class="container py-5">
+        <div class="container py-3">
             <h2>{{ book.name }}</h2>
-        <p><strong>Описание:</strong> {{ book.description }}</p>
-            <button type="submit">Запросить обмен</button>
+        </div>
+        <div class="container py-2">
+            <div class="row row-cols-3">
+            <p>{{ book.description }}</p>
+            {% thumbnail book.image "2000x2700" crop="center" upscale=True as im %}
+            <img src="{{ im.url }}">
+            {% endthumbnail %}
+            </div>
         </div>
     </main>
 </body>
