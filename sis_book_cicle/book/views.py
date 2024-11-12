@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book
+from .forms import BookForm
+
 
 
 def index(request):
@@ -21,3 +23,20 @@ def book_detail(request, book_id):
         'book': book
     }
     return render(request, 'books/test_book.html', context)
+
+
+def book_create(request):
+    '''Функция отвечающая за создание поста'''
+    form = BookForm(request.POST or None,
+                    files=request.FILES or None,)
+
+    if form.is_valid():
+
+        book = form.save(commit=None)
+        book.availability = True
+        book.save()
+
+        return redirect('book:index')
+
+    context = {'form': form}
+    return render(request, 'books/create_book.html', context)
