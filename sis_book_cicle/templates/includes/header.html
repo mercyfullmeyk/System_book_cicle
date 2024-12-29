@@ -1,0 +1,48 @@
+<!DOCTYPE html> <!-- Используется html 5 версии -->
+<html lang="ru"> <!-- Язык сайта - русский -->
+{% load static %}  
+    <header>
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>	   
+    <header>
+      <nav class="navbar navbar-light" style="background-color: hsl(45, 69%, 19%)">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'book:index' %}">
+            <span style="color:white">SysBookCycle</span>
+            <a style="color:white">Обмен Книгами - Школьный Сайт</a>
+            <ul class="nav nav-pills">
+            <!---<li><a class="navbar-brand" href="books/create/" style="color:white">Добавить Книгу</a></li>--->
+            {% with request.resolver_match.view_name as view_name %}  
+          <ul class="nav nav-pills">
+
+            {% endwith %} 
+            {% if user.is_authenticated %}
+            <li class="nav-item"> 
+              <a class="nav-link" href="books/create/"><span style="color:white">Добавить Книгу</span></a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:logout' %}"><span style="color:white">{{ user.username }}</span></a>
+            </li>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-info" style="color:white">Выйти</button>
+            </form>
+
+            {% else %}
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:login' %}">Войти</a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link link-light" href="{% url 'users:signup' %}">Регистрация</a>
+            </li>
+            {% endif %}
+          </ul>
+          </a> 
+          </ul>
+        </div>
+      </nav>      
+    </header> 

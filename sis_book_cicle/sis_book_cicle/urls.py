@@ -5,7 +5,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('users.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
     path('', include('book.urls', namespace='book')),
+    path('api/', include('api.urls', namespace='api'))
 ]
 
 if settings.DEBUG:

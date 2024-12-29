@@ -3,7 +3,6 @@ from .models import Book
 from .forms import BookForm
 
 
-
 def index(request):
     '''Функция отвечающая за главную страницу'''
     books_list = Book.objects.all()
