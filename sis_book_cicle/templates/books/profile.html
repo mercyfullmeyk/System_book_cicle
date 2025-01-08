@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-{% extends 'base.html' %}
-{% block content %}
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>    
+    {% extends 'base.html' %}
+    {% load thumbnail %}
+  </head>
+  {% block content %}
 <body>
     <main>
         <div class="container py-5">
-        <h1><strong>Популярные Книги</strong></h1>
+            <h2>Профайл пользователя {{ author.username }}</h2>
         </div>
         <div class="container py-1">
             <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3">
-                {% for book in page_obj %}
+                {% for book in books %}
                 {% include 'books/includes/test.html' %}
                   {% if not forloop.last %}{% endif %}
                 {% endfor %}

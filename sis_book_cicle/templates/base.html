@@ -1,6 +1,6 @@
 <!DOCTYPE html> 
 <html lang="ru">    
-
+  {% load static %}  
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
@@ -10,6 +10,7 @@
       crossorigin="anonymous">
     <title>
       {% block title %}
+      Обмен Книгами - Школьный Сайт
       {% endblock %}
     </title>
 </head>
@@ -24,17 +25,8 @@
       <footer>
         {% block footer %}
         {% endblock %}
+        {% include 'books/includes/paginator.html' %}
         {% include 'includes/footer.html' %}
       </footer>
     </body>
   </html> 
-
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@
     {% endthumbnail %}
     <div class="card-body">
       <h5 class="card-title">{{ book.name }}</h5>
-      <p class="card-text">{{ book.description }}</p>
+      <p class="card-text">{{ book }}</p>
       <a href="{% url 'book:book_detail' book.id %}" class="btn btn-outline-secondary">Подробнее</a>
     </div>
   </div>

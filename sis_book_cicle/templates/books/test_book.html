@@ -10,7 +10,7 @@
         </div>
         <div class="container py-2">
             <div class="row row-cols-3">
-            <p>{{ book.description }}</p>
+            <p>{{ book.description }} <br><br> Состояние книги: {{ book.condition }}<br><br>Выставил на обмен: {{ book.author }}</p>
             {% thumbnail book.image "2000x2700" crop="center" upscale=True as im %}
             <img src="{{ im.url }}">
             {% endthumbnail %}

@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
     path('books/create/', views.book_create, name='book_create'),
+    path('profile/<str:username>/', views.profile, name='profile'),
 ]

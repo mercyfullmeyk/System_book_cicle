@@ -6,6 +6,7 @@
 <html lang="ru"> 
   <head>
     <meta charset="utf-8">
+    <title>Обмен Книгами - Школьный Сайт</title>
   </head>
   <body>	   
     <header>
@@ -15,22 +16,21 @@
             <span style="color:white">SysBookCycle</span>
             <a style="color:white">Обмен Книгами - Школьный Сайт</a>
             <ul class="nav nav-pills">
-            <!---<li><a class="navbar-brand" href="books/create/" style="color:white">Добавить Книгу</a></li>--->
             {% with request.resolver_match.view_name as view_name %}  
           <ul class="nav nav-pills">
 
             {% endwith %} 
             {% if user.is_authenticated %}
             <li class="nav-item"> 
-              <a class="nav-link" href="books/create/"><span style="color:white">Добавить Книгу</span></a>
+              <a class="nav-link" href="{% url 'book:book_create' %}"><span style="color:white">Добавить Книгу</span></a>
             </li>
             <li class="nav-item"> 
-              <a class="nav-link link-light" href="{% url 'users:logout' %}"><span style="color:white">{{ user.username }}</span></a>
+              <a class="nav-link link-light" href="{% url 'book:profile' user.username %}"><span style="color:white">{{ user.username }} Litcoins: {{coin.coins}}</span></a>
             </li>
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}
-              <button type="submit" class="btn btn-info" style="color:white">Выйти</button>
-            </form>
+              <button type="submit" class="btn btn-outline-secondary" style="color:white">Выйти</button>
+            </form> 
 
             {% else %}
             <li class="nav-item"> 
