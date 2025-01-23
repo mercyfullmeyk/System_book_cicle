@@ -8,14 +8,14 @@
 <body>
     <main>
         <div class="container py-5">
-            <h2>Профайл пользователя {{ author.username }}
-              <a class="nav-link link-light" href="{% url 'book:user_rent' user.username %}"><span style="color:black">Арендованные книги</span></a>
-            </h2>
+            <h2>Арендованные книги пользователя {{ author.username }}</h2>
+            <a class="nav-link link-light" href="{% url 'book:book_rent_agree' user.username %}"><span style="color:black">Запросы на аренду</span></a>
         </div>
+        <p><p>
         <div class="container py-1">
             <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3">
-                {% for book in books %}
-                {% include 'books/includes/test.html' %}
+                {% for rent in rents %}
+                {% include 'books/includes/test_rent.html' %}
                   {% if not forloop.last %}{% endif %}
                 {% endfor %}
             </div>

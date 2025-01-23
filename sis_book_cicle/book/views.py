@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
-from .models import Book, User, Litcoin
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Book, User, Litcoin, Rentsbook
 from django.core.paginator import Paginator
 from .forms import BookForm
 from django.contrib.auth.decorators import login_required
+from datetime import date
+import datetime
 
 
 def pagic(list_posts, posts_of_page=9):
@@ -12,17 +14,49 @@ def pagic(list_posts, posts_of_page=9):
 
 def Litic(author):
     '''Функция для монет'''
-    return Litcoin.objects.filter(author=author)[0]
-
+    if Litcoin.objects.filter(author=author.id):
+        return Litcoin.objects.filter(author=author.id)[0]
+    else:
+        return 0
 
 
 def index(request):
     '''Функция отвечающая за главную страницу'''
-    books_list = Book.objects.all()
+    books_list = Book.objects.filter(availability=True)
     title = 'Каталог'
     page_number = request.GET.get('page')
     page_obj = pagic(books_list).get_page(page_number)
     coin = Litic(request.user)
+
+    rn = Rentsbook.objects.filter(arendator=request.user)
+
+    ob = []
+    for r in rn:
+        ob.append(r)
+
+    if len(ob) != 0:
+        rn = rn[0]
+        today = datetime.date.today()
+        time_to_td = rn.end_rent - today
+
+        resp = (f'У вас осталось {time_to_td.days} '
+                f'дней до конца аренды {rn.book.name}!')
+
+        if time_to_td.days == 1:
+            book = rn.book
+            rn.delete()
+            book.delete()
+
+        context = {
+            'title': title,
+            'books': books_list,
+            'page_obj': page_obj,
+            'coin': coin,
+            'resp': resp
+        }
+
+        return render(request, 'books/test_index.html', context)
+
     context = {
         'title': title,
         'books': books_list,
@@ -38,6 +72,36 @@ def book_detail(request, book_id):
     book = Book.objects.filter(id=book_id)
     book = book[0]
     coin = Litic(request.user)
+    rent = Rentsbook.objects.filter(user=request.user, book=book)
+    rent_arendator = Rentsbook.objects.filter(
+        arendator=request.user,
+        book=book
+    )
+
+    published_posts = []
+
+    published_posts_are = []
+
+    for post in rent:
+        published_posts.append(post)
+
+    for post in rent_arendator:
+        published_posts_are.append(post)
+
+    if len(published_posts) != 0:
+        context = {
+            'rent': rent[0],
+            'coin': coin,
+        }
+        return render(request, 'books/rent_book.html', context)
+
+    if len(published_posts_are) != 0:
+        context = {
+            'rent': rent_arendator[0],
+            'coin': coin,
+        }
+        return render(request, 'books/rent_book.html', context)
+
     context = {
         'book': book,
         'coin': coin,
@@ -81,3 +145,133 @@ def profile(request, username):
         'coin': coin,
     }
     return render(request, 'books/profile.html', context)
+
+
+@login_required
+def book_rent(request, book_id):
+    '''Функция отвечающая за аренду книги'''
+    book = get_object_or_404(Book, id=book_id)
+    title = 'Каталог'
+    cost = book.coins
+    coin = Litic(request.user)
+    rent_arendator = Rentsbook.objects.filter(
+        arendator=request.user,
+        book=book
+    )
+
+    published_posts = []
+
+    for post in rent_arendator:
+        published_posts.append(post)
+
+    coin = Litic(request.user)
+
+    context = {
+        'title': title,
+        'coin': coin,
+    }
+
+    if len(published_posts) == 0:
+        if request.method == 'POST' and book.author != request.user:
+            if coin.coins >= cost:
+                rn = Rentsbook(
+                    user=book.author,
+                    arendator=request.user,
+                    book=book
+                )
+                rn.save()
+
+            return render(request, 'books/rent_recomend.html', context)
+    return render(request, 'books/false_rent_recomend.html', context)
+
+
+@login_required
+def book_rent_agree(request, username):
+    '''Функция отвечающая за аренду книги'''
+    usersnames = User.objects.filter(username=username)[0]
+    rent_user = Rentsbook.objects.filter(user=usersnames, in_rent=0)
+    rent_arendator = Rentsbook.objects.filter(arendator=usersnames, in_rent=0)
+    coin = Litic(request.user)
+
+    context = {
+        'coin': coin,
+        'rent_user': rent_user,
+        'rent_arendator': rent_arendator
+    }
+
+    return render(request, 'books/rent_agree.html', context)
+
+
+@login_required
+def user_rent(request, username):
+    '''Функция отвечающая за страницу арендованных человеком книг'''
+    user = User.objects.get(username=username)
+    rents = Rentsbook.objects.filter(arendator=user, in_rent=1)
+    book_list = [0] * len(rents)
+    for i in range(0, len(rents)):
+        book_list[i] = rents[i].book
+
+    coin = Litic(user)
+
+    context = {
+        'author': user,
+        'rents': rents,
+        'coin': coin,
+    }
+    return render(request, 'books/profile_rent.html', context)
+
+
+def book_one_or_two_agree(request, book_id):
+    '''Функция отвечающая за подтверждение передачи'''
+    book = get_object_or_404(Book, id=book_id)
+    cost = book.coins
+    coin = Litic(request.user)
+
+    if request.method == 'POST' and book.author != request.user:
+        if coin.coins >= cost:
+            rn = Rentsbook.objects.filter(
+                user=book.author,
+                arendator=request.user,
+                book=book
+            )[0]
+            rn.agree_two = 1
+
+        if rn.agree_one == 1 and rn.agree_two == 1:
+            rn.in_rent = 1
+            book.availability = 0
+            book.save()
+            rn.start_rent = date.today()
+            rn.end_rent = datetime.date.today() + datetime.timedelta(30)
+            lit = Litcoin.objects.filter(author=request.user)[0]
+            lit_author = Litcoin.objects.filter(author=book.author)[0]
+            lit.coins = coin.coins - cost
+            lit_author.coins += cost
+            lit.save()
+            lit_author.save()
+
+        rn.save()
+
+    elif request.method == 'POST' and book.author == request.user:
+        rn = Rentsbook.objects.filter(user=book.author, book=book)[0]
+        rn.agree_one = 1
+
+        if rn.agree_one == 1 and rn.agree_two == 1:
+            rn.in_rent = 1
+            book.availability = 0
+            book.save()
+            rn.start_rent = date.today()
+            rn.end_rent = datetime.date.today() + datetime.timedelta(30)
+            lit = Litcoin.objects.filter(author=request.user)[0]
+            lit_author = Litcoin.objects.filter(author=book.author)[0]
+            lit.coins = coin.coins - cost
+            lit_author.coins += cost
+            lit.save()
+            lit_author.save()
+
+        rn.save()
+
+    context = {
+        'rent': rn,
+        'coin': coin,
+    }
+    return render(request, 'books/rent_book.html', context)

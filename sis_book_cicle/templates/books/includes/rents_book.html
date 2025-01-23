@@ -1,0 +1,10 @@
+{% load thumbnail %}
+<article>
+   <div style="word-wrap: break-word;
+   width: 100px;">
+  {% thumbnail rent.book.image "1920x2700" crop="center" upscale=True as im %}
+    <img class="card-img-top" src="{{ im.url }}">
+    <a href="{% url 'book:book_detail' rent.book.id %}"style="text-decoration: none; color:black"><h3>{{ rent.book.name }}</h3></a>
+      <p class="card-text">{{ rent.book }}</p>
+  {% endthumbnail %}
+</article>

@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,6 +10,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('', include('book.urls', namespace='book')),
     path('api/', include('api.urls', namespace='api'))
+    
 ]
 
 if settings.DEBUG:

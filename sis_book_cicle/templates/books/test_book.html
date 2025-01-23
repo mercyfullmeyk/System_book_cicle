@@ -10,11 +10,16 @@
         </div>
         <div class="container py-2">
             <div class="row row-cols-3">
-            <p>{{ book.description }} <br><br> Состояние книги: {{ book.condition }}<br><br>Выставил на обмен: {{ book.author }}</p>
+            <p>{{ book.description }} <br><br> Состояние книги: {{ book.condition }}<br>Выставил на обмен: {{ book.author }}<br>Стоимость аренды на месяц: {{ book.coins }} </p>
+
             {% thumbnail book.image "2000x2700" crop="center" upscale=True as im %}
             <img src="{{ im.url }}">
             {% endthumbnail %}
             </div>
+            <form action="{% url 'book:book_rent' book.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary">Арендовать</button>
+              </form><br><br>
         </div>
     </main>
 </body>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block content %}
+<body>
+    <main>
+        <div class="container py-3">
+            <h2>{{ rent.book.name }}</h2>
+        </div>
+        <div class="container py-2">
+            <div class="row row-cols-3">
+            <p>{{ rent.book.description }} <br><br> Состояние книги: {{ rent.book.condition }}<br>Выставил на обмен: {{ rent.book.author }}<br>Стоимость аренды на месяц: {{ rent.book.coins }} <p class="card-text">Взято: {{ rent.start_rent }}<br>Нужно вернуть: {{ rent.end_rent }}</p> </p>
+            {% thumbnail rent.book.image "2000x2700" crop="center" upscale=True as im %}
+            <img src="{{ im.url }}">
+            {% endthumbnail %}
+            {% if rent.agree_two == 0 or rent.agree_one == 0 %}
+            <form action="{% url 'book:book_one_or_two_agree' rent.book.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary">Подтвердить передачу</button>
+              </form><br><br>
+              {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+{% endblock %}
+</html>

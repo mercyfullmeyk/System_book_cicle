@@ -1,0 +1,17 @@
+{% load thumbnail %}
+<div class="col">
+    <div class="card" style="width: 24rem;">
+    {% thumbnail rent.book.image "1920x2700" crop="center" upscale=True as im %}
+    <img src="{{ im.url }}">
+    {% endthumbnail %}
+    <div class="card-body">
+      <h5 class="card-title">{{ rent.book.name }}</h5>
+      <p class="card-text">{{ rent.book }}</p>
+      <p class="card-text">Взято: {{ rent.start_rent }} Нужно вернуть: {{ rent.end_rent }}</p>
+      <a href="{% url 'book:book_detail' rent.book.id %}" class="btn btn-outline-secondary">Подробнее</a>
+    </div>
+  </div>
+</div>
+
+
+

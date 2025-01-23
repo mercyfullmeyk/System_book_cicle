@@ -1,0 +1,20 @@
+{# Это код файла templates/users/logged_out.html #}
+
+{% extends 'base.html' %}
+{% block title %}Вы вышли из системы{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 p-5">
+    <div class="card">
+      <div class="card-header">
+        Выход
+      </div>
+      <div class="card-body">
+        <p>
+          Вы создали предложение по обмену книгой, напишите пользователю в телеграмме по username и уточните детали обмена после чего при передачи книги подтвердите обмен на соответсвующей странице
+        </p>
+      </div> <!-- card body --> 
+    </div> <!-- card -->
+  </div> <!-- col -->
+</div> <!-- row -->
+{% endblock %}
