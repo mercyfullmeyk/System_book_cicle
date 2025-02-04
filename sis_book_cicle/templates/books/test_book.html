@@ -16,10 +16,12 @@
             <img src="{{ im.url }}">
             {% endthumbnail %}
             </div>
+            {% if user.is_authenticated %}
             <form action="{% url 'book:book_rent' book.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-secondary">Арендовать</button>
               </form><br><br>
+            {% endif %}
         </div>
     </main>
 </body>
