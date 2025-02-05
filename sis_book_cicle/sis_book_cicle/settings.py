@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-62djagjb*8-ukc$)vv(a4lde#^&mvl*=n4qpnxdv#@dm5^4(p=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'book.apps.BookConfig',
-    'api.apps.ApiConfig',
     'sorl.thumbnail',
 ]
 
