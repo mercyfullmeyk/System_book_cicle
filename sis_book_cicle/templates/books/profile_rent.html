@@ -8,8 +8,8 @@
 <body>
     <main>
         <div class="container py-5">
-            <h2>Арендованные книги пользователя {{ author.username }}</h2>
-            <a class="nav-link link-light" href="{% url 'book:book_rent_agree' user.username %}"><span style="color:black">Запросы на аренду</span></a>
+            <h2>Арендованные книги пользователя {{ author.username }}</h2><br><br>
+            <a class="btn btn-outline-secondary" href="{% url 'book:book_rent_agree' user.username %}"><span>Запросы на аренду</span></a>
         </div>
         <p><p>
         <div class="container py-1">

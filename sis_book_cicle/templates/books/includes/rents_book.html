@@ -1,10 +1,24 @@
 {% load thumbnail %}
-<article>
-   <div style="word-wrap: break-word;
-   width: 100px;">
+<!-- <article>
+   <div style="word-wrap: break-word; width: 100px;">
   {% thumbnail rent.book.image "1920x2700" crop="center" upscale=True as im %}
     <img class="card-img-top" src="{{ im.url }}">
     <a href="{% url 'book:book_detail' rent.book.id %}"style="text-decoration: none; color:black"><h3>{{ rent.book.name }}</h3></a>
       <p class="card-text">{{ rent.book }}</p>
+      <p>Запрос от {{ rent.arendator }}</p>
   {% endthumbnail %}
-</article>
+</article> -->
+<div style="border-radius: 30%;" class="col">
+  <div class="card" style="width: 24rem;">
+  {% thumbnail rent.book.image "1920x2700" crop="center" upscale=True as im %}
+  <img src="{{ im.url }}">
+  {% endthumbnail %}
+  <div class="card-body">
+    <h5 class="card-title">{{ rent.book.name }}</h5>
+    <p class="card-text">{{ rent.book }}</p>
+    <p> Запрос от {{ rent.arendator }}</p>
+    <a href="{% url 'book:book_detail' rent.book.id %}" class="btn btn-outline-secondary">Подробнее</a>
+  </div>
+</div>
+</div>
+

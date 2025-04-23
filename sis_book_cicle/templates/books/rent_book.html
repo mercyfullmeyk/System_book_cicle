@@ -10,7 +10,7 @@
         </div>
         <div class="container py-2">
             <div class="row row-cols-3">
-            <p>{{ rent.book.description }} <br><br> Состояние книги: {{ rent.book.condition }}<br>Выставил на обмен: {{ rent.book.author }}<br>Стоимость аренды на месяц: {{ rent.book.coins }} <p class="card-text">Взято: {{ rent.start_rent }}<br>Нужно вернуть: {{ rent.end_rent }}</p> </p>
+            <p>{{ rent.book.description }} <br><br> Состояние книги: {{ rent.book.condition }}<br>Выставил на обмен: {{ rent.book.author }}<br>Стоимость аренды на месяц: {{ rent.book.coins }} <p class="card-text">Взято: {{ rent.start_rent }}<br>Нужно вернуть: {{ rent.end_rent }} <br>Взял в аренду {{ rent.arendator }}</p> </p>
             {% thumbnail rent.book.image "2000x2700" crop="center" upscale=True as im %}
             <img src="{{ im.url }}">
             {% endthumbnail %}

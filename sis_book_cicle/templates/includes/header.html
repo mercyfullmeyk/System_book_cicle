@@ -6,11 +6,29 @@
 <html lang="ru"> 
   <head>
     <meta charset="utf-8">
-    <title>Обмен Книгами - Школьный Сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><p style="color: white;">Обмен Книгами - Школьный Сайт<p></title>
+      <style>
+        @media (max-width: 576px) {
+            .book-container {
+                text-align: center;
+            }
+        }
+        @media (min-width: 577px) and (max-width: 992px) {
+            .book-container {
+                text-align: left;
+            }
+        }
+        @media (min-width: 993px) {
+            .book-container {
+                text-align: justify;
+            }
+        }
+    </style>
   </head>
   <body>	   
     <header>
-      <nav class="navbar navbar-light" style="background-color: hsl(45, 69%, 19%)">
+      <nav class="navbar navbar-light" style="background-color: black">
         <div class="container">
           <a class="navbar-brand" href="{% url 'book:index' %}">
             <span style="color:white">SysBookCycle</span>
@@ -25,7 +43,7 @@
               <a class="nav-link" href="{% url 'book:book_create' %}"><span style="color:white">Добавить Книгу</span></a>
             </li>
             <li class="nav-item"> 
-              <a class="nav-link link-light" href="{% url 'book:profile' user.username %}"><span style="color:white">{{ user.username }} Litcoins: {{coin.coins}}</span></a>
+              <a class="nav-link link-light" href="{% url 'book:profile' user.username %}"><span style="color:white">{{ user.username }} Литкоины: {{coin.coins}}</span></a>
             </li>
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}

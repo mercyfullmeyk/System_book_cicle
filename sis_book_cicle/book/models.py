@@ -10,18 +10,26 @@ class Book(models.Model):
     """Модель для Книг."""
     def __str__(self):
         return f'{self.description[:130]}...'
-    name = models.TextField()
+    name = models.TextField(
+        help_text='Название книги'
+    )
 
-    description = models.TextField()
+    description = models.TextField(
+        help_text='Описание книги'
+    )
 
-    availability = models.BooleanField()
+    availability = models.BooleanField(
+        help_text='В наличии'
+    )
 
     image = models.ImageField(
         upload_to='books/',
-        blank=True
+        blank=True,
+        help_text='Фото книги'
     )
     condition = models.IntegerField(
         default=1,
+        help_text='Состояние книги',
         validators=[
             MaxValueValidator(10),
             MinValueValidator(1)
@@ -36,6 +44,7 @@ class Book(models.Model):
 
     coins = models.IntegerField(
         default=0,
+        help_text='Стоимость в литкоинах',
         validators=[
             MaxValueValidator(100),
             MinValueValidator(0)

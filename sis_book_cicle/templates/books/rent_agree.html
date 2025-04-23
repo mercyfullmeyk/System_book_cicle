@@ -8,7 +8,7 @@
         <h1><strong>Запросы на аренду к вам</strong></h1>
         </div>
         <div class="container py-1">
-            <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3">
+            <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2">
                 {% for rent in rent_user %}
                 {% include 'books/includes/rents_book.html' %}
                   {% if not forloop.last %}{% endif %}

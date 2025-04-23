@@ -8,12 +8,12 @@
 <body>
     <main>
         <div class="container py-5">
-            <h2>Профайл пользователя {{ author.username }}
-              <a class="nav-link link-light" href="{% url 'book:user_rent' user.username %}"><span style="color:black">Арендованные книги</span></a>
+            <h2>Профайл пользователя {{ author.username }}<br><br>
+              <a class="btn btn-outline-secondary" href="{% url 'book:user_rent' user.username %}"><span>Арендованные книги</span></a>
             </h2>
         </div>
         <div class="container py-1">
-            <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for book in books %}
                 {% include 'books/includes/test.html' %}
                   {% if not forloop.last %}{% endif %}

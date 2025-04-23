@@ -1,5 +1,5 @@
 {% load thumbnail %}
-<div class="col">
+<div style="border-radius: 30%;" class="col">
     <div class="card" style="width: 24rem;">
     {% thumbnail book.image "1920x2700" crop="center" upscale=True as im %}
     <img src="{{ im.url }}">

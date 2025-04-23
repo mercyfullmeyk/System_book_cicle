@@ -30,6 +30,10 @@ def index(request): #Функция главной страницы сайта
 
     if request.user.is_authenticated is True:
 
+        if coin == 0:
+            coin_lit = Litcoin(author=request.user)
+            coin_lit.save()
+
         rn = Rentsbook.objects.filter(arendator=request.user)
 
         ob = []
@@ -41,13 +45,22 @@ def index(request): #Функция главной страницы сайта
             today = datetime.date.today()
             time_to_td = rn.end_rent - today
 
-            resp = (f'У вас осталось {time_to_td.days} '
-                f'дней до конца аренды {rn.book.name}!')
-
-            if time_to_td.days == 1:
+            if time_to_td.days <= 0:
                 book = rn.book
                 rn.delete()
                 book.delete()
+
+                context = {
+                    'title': title,
+                    'books': books_list,
+                    'page_obj': page_obj,
+                    'coin': coin,
+                }
+
+                return render(request, 'books/test_index.html', context)
+
+            resp = (f'У вас осталось {time_to_td.days} '
+                    f'дней до конца аренды {rn.book.name}!')
 
             context = {
                 'title': title,
@@ -183,7 +196,9 @@ def book_rent(request, book_id): #Функция для запроса арен�
     }
 
     if len(published_posts) == 0:
-        if request.method == 'POST' and book.author != request.user:
+        if book.author == request.user:
+            return render(request, 'books/user_false.html', context)
+        if request.method == 'POST':
             if coin.coins >= cost:
                 rn = Rentsbook(
                     user=book.author,
