@@ -132,3 +132,7 @@ dmypy.json
 .idea
 venv
 *media
+
+
+.DS_Store
+.sqlite3
